@@ -6,35 +6,20 @@ from .serializers import KeywordSerializer, FlagSerializer, ContentItemSerialize
 from .services import run_content_scan
 
 class KeywordViewSet(viewsets.ModelViewSet):
-    """
-    Requirement 2: API endpoint to create and manage keywords.
-    """
     queryset = Keyword.objects.all()
     serializer_class = KeywordSerializer
 
 class FlagViewSet(viewsets.ModelViewSet):
-    """
-    Requirement 5: Review workflow allowing status updates to 
-    pending, relevant, or irrelevant.
-    """
     queryset = Flag.objects.all()
     serializer_class = FlagSerializer
-    # Restricted to GET and PATCH as per assignment requirements
     http_method_names = ['get', 'patch', 'delete']
 
 class ContentItemViewSet(viewsets.ModelViewSet):
-    """
-    Helper viewset to view imported content items.
-    """
     queryset = ContentItem.objects.all()
     serializer_class = ContentItemSerializer
 
 @api_view(['POST'])
 def trigger_scan(request):
-    """
-    Requirement 3 & 6: Trigger a scan against the chosen source.
-    Uses the mock dataset provided in the assignment.
-    """
     mock_data = [
         {
             "title": "Learn Django Fast", 

@@ -3,12 +3,6 @@ from django.utils.dateparse import parse_datetime
 from .models import Keyword, ContentItem, Flag
 
 def calculate_score(keyword_name, title, body):
-    """
-    Implements the scoring mechanism[cite: 40]:
-    - Exact match in title: 100 [cite: 41]
-    - Partial match in title: 70 [cite: 42]
-    - Match in body: 40 [cite: 43]
-    """
     kw = keyword_name.lower()
     t = title.lower()
     b = body.lower()
@@ -28,7 +22,6 @@ def run_content_scan(content_data):
     keywords = Keyword.objects.all()
     
     for item in content_data:
-        # FIX: Convert the string from mock_data into a real datetime object
         last_updated_dt = parse_datetime(item['last_updated'])
 
         content_obj, created = ContentItem.objects.update_or_create(
@@ -45,11 +38,7 @@ def run_content_scan(content_data):
             
             if score > 0:
                 flag = Flag.objects.filter(keyword=kw, content_item=content_obj).first()
-                
-                # SUPPRESSION RULE[cite: 52]: 
-                # If irrelevant, stay suppressed unless content is newer [cite: 54]
                 if flag and flag.status == 'irrelevant':
-                    # This comparison now works because both are datetime objects
                     if content_obj.last_updated > flag.created_at:
                         flag.status = 'pending'
                         flag.score = score
