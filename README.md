@@ -30,7 +30,7 @@ Timezone Awareness: The system uses Django's parse_datetime to ensure accurate c
 *** Setup & Installation ***
 1. Environment Setup
 # Clone the repository
-git clone <your-repository-url>
+git clone https://github.com/singhnilesh9986/monitor_assignment
 cd monitor_assignment
 
 # Create a virtual environment
