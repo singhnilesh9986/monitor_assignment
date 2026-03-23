@@ -16,9 +16,7 @@ def calculate_score(keyword_name, title, body):
     return 0
 
 def run_content_scan(content_data):
-    """
-    Handles the critical Suppression Logic[cite: 50, 51].
-    """
+   
     keywords = Keyword.objects.all()
     
     for item in content_data:
